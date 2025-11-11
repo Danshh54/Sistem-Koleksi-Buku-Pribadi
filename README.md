@@ -4,20 +4,20 @@
 
 Program ini untuk mengelola koleksi buku pribadi. Program ini memungkinkan pengguna untuk menambahkan, menampilkan, mencari, mengedit, dan menghapus data buku dengan mudah. Selain itu, sistem juga menyediakan fitur pengurutan (sorting) berdasarkan judul, genre, dan rating buku. Untuk menjalankan program ini pada VSCode, lakukan ini:
 
-⦁	Buka Visual Studio Code
-⦁	Tekan Ctrl + Shift + P (atau Cmd + Shift + P di Mac) untuk membuka Command Palette.Ketik dan pilih “Git: Clone”.
-⦁	Ketika diminta untuk URL repositori, tempelkan ini:
-	https://github.com/Danshh54/Sistem-Koleksi-Buku-Pribadi.git 
-⦁	Pilih folder lokal tempat Anda ingin menyimpan proyek
-⦁	Setelah kloning, VS Code akan menanyakan apakah Anda ingin membuka repositori. klik “Open”.
+- Buka Visual Studio Code
+- Tekan Ctrl + Shift + P (atau Cmd + Shift + P di Mac) untuk membuka Command Palette.Ketik dan pilih “Git: Clone”.
+- Ketika diminta untuk URL repositori, tempelkan ini:
+https://github.com/Danshh54/Sistem-Koleksi-Buku-Pribadi.git 
+- Pilih folder lokal tempat Anda ingin menyimpan proyek
+- Setelah kloning, VS Code akan menanyakan apakah Anda ingin membuka repositori. klik “Open”.
 
 Program ini memiliki struktur daftar menu:
 
 [1] Tampilkan Daftar Buku
-     [1] Berdasarkan Judul (A–Z)
-     [2] Berdasarkan Genre (A–Z)
-     [3] Berdasarkan Rating (Tertinggi–Terendah)
-     [4] Kembali ke Menu Utama
+    [1] Berdasarkan Judul (A–Z)
+    [2] Berdasarkan Genre (A–Z)
+    [3] Berdasarkan Rating (Tertinggi–Terendah)
+    [4] Kembali ke Menu Utama
 [2] Tambahkan Buku  
 [3] Pencarian Buku  
 [4] Pengeditan Buku  
@@ -60,4 +60,5 @@ Opsi untuk menutup program atau kembali ke menu utama.
 Catatan, Program ini ditujukan untuk pengelolaan koleksi buku pribadi, bukan untuk skala besar. Algoritma dipilih berdasarkan kemudahan implementasi dan efisiensi untuk jumlah data kecil.
 
 JANGAN, memasukan input yang tidak sesuai pada daftar menu, pilihan metode penampilan daftar buku, atau konfirmasi pengeditan dan penghapusan. Melakukan hal tersebut akan membuat program akan menampilkan pesan error.
+
 
