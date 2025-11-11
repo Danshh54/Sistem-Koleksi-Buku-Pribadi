@@ -14,10 +14,10 @@ https://github.com/Danshh54/Sistem-Koleksi-Buku-Pribadi.git
 Program ini memiliki struktur daftar menu:
 
 [1] Tampilkan Daftar Buku
-    [1] Berdasarkan Judul (A–Z)
-    [2] Berdasarkan Genre (A–Z)
-    [3] Berdasarkan Rating (Tertinggi–Terendah)
-    [4] Kembali ke Menu Utama
+- Berdasarkan Judul (A–Z)
+- Berdasarkan Genre (A–Z)
+- Berdasarkan Rating (Tertinggi–Terendah)
+- Kembali ke Menu Utama
 [2] Tambahkan Buku  
 [3] Pencarian Buku  
 [4] Pengeditan Buku  
@@ -60,5 +60,6 @@ Opsi untuk menutup program atau kembali ke menu utama.
 Catatan, Program ini ditujukan untuk pengelolaan koleksi buku pribadi, bukan untuk skala besar. Algoritma dipilih berdasarkan kemudahan implementasi dan efisiensi untuk jumlah data kecil.
 
 JANGAN, memasukan input yang tidak sesuai pada daftar menu, pilihan metode penampilan daftar buku, atau konfirmasi pengeditan dan penghapusan. Melakukan hal tersebut akan membuat program akan menampilkan pesan error.
+
 
 
