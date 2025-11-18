@@ -14,6 +14,10 @@ string dataBuku[jmlBaris][jmlKolom] = {
 int jmlDataBuku = 3; 
 
 void tambahBuku(const string judul, const string author, const string tahun, const string genre, const string rating) {
+    if (jmlDataBuku >= jmlBaris) {
+        cout << "Kapasitas penyimpanan buku penuh!" << endl;
+        return;
+    }
     dataBuku[jmlDataBuku][0] = judul;
     dataBuku[jmlDataBuku][1] = author;
     dataBuku[jmlDataBuku][2] = tahun;
@@ -36,7 +40,9 @@ void tampilBukuJudul() {
             }
         }
         if (minIndex != i) {
-            swap(dataBuku[i], dataBuku[minIndex]);
+            for (int k = 0; k < jmlKolom; k++) {
+                swap(dataBuku[i][k], dataBuku[minIndex][k]);
+            }
         }
     }
     cout << "\nDaftar Buku Berdasarkan Judul (A-Z):" << endl;
@@ -65,7 +71,9 @@ void tampilBukuTahunRating(int z) {
             }
         }
         if (maxIndex != i) {
-            swap(dataBuku[i], dataBuku[maxIndex]);
+            for (int k = 0; k < jmlKolom; k++) {
+                swap(dataBuku[i][k], dataBuku[maxIndex][k]);
+            }
         }
     }
 
@@ -130,62 +138,59 @@ int main() {
         if (pilihan == 1) {
             cin.ignore();
             
-            if (jmlDataBuku != jmlBaris) {
-                while (true) {
-                    cout << "Masukan judul buku: ";
-                    getline(cin, judul);
-                    if (judul == "") {
-                        cout << "Judul buku tidak boleh kosong!" << endl;
-                        continue;
-                    }
-                    break;
-                }
-                while (true) {
-                    cout << "Masukan author buku: ";
-                    getline(cin, author);
-                    if (author == "") {
-                        cout << "Author buku tidak boleh kosong!" << endl;
-                        continue;
-                    }
-                    break;
-                }
-                while (true) {
-                    a = validasiInput("Masukan tahun terbit buku: ");
-                    cin.ignore();
-                    if (a < 1000 || a > 2024) {
-                        cout << "Tahun terbit tidak valid! Masukkan antara 1000 sampai 2024." << endl;
-                        continue;
-                    }
-                    break;
-                }
-                
-                while (true) {
-                    cout << "Masukan genre buku: ";
-                    getline(cin, genre);
-                    if (genre == "") {
-                        cout << "Genre buku tidak boleh kosong!" << endl;
-                        continue;
-                    }
-                    break;
-                }
-
-                while (true) {
-                    b = validasiInput("Masukan rating buku: ");
-                    if (b < 1 || b > 10) {
-                    cout << "Rating harus antara 1 sampai 10!" << endl;
+            while (true) {
+                cout << "Masukan judul buku: ";
+                getline(cin, judul);
+                if (judul == "") {
+                    cout << "Judul buku tidak boleh kosong!" << endl;
                     continue;
-                    }
-                    break;
                 }
-
-                tahun = to_string(a);
-                rating = to_string(b);
-                tambahBuku(judul, author, tahun, genre, rating);
-                cout << "Buku berhasil ditambahkan!" << endl;
-                } else {
-                cout << "Kapasitas penyimpanan buku penuh!" << endl;
+                break;
             }
+            while (true) {
+                cout << "Masukan author buku: ";
+                getline(cin, author);
+                if (author == "") {
+                    cout << "Author buku tidak boleh kosong!" << endl;
+                    continue;
+                }
+                break;
+            }
+            while (true) {
+                a = validasiInput("Masukan tahun terbit buku: ");
+                cin.ignore();
+                if (a < 1000 || a > 2024) {
+                    cout << "Tahun terbit tidak valid! Masukkan antara 1000 sampai 2024." << endl;
+                    continue;
+                }
+                break;
+            }
+            
+            while (true) {
+                cout << "Masukan genre buku: ";
+                getline(cin, genre);
+                if (genre == "") {
+                    cout << "Genre buku tidak boleh kosong!" << endl;
+                    continue;
+                }
+                break;
+            }
+
+            while (true) {
+                b = validasiInput("Masukan rating buku: ");
+                if (b < 1 || b > 10) {
+                cout << "Rating harus antara 1 sampai 10!" << endl;
+                continue;
+                }
+                break;
+            }
+
+            tahun = to_string(a);
+            rating = to_string(b);
+            tambahBuku(judul, author, tahun, genre, rating);
+            cout << "Buku berhasil ditambahkan!" << endl;
         }
+         
         if (pilihan == 2) {
             int pilihanTampil;
             cout << "\nPilihan Tampilkan Buku:" << endl;
