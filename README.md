@@ -15,7 +15,7 @@ Program ini memiliki struktur daftar menu:
 
 [1] Tampilkan Daftar Buku
 - Berdasarkan Judul (A–Z)
-- Berdasarkan Genre (A–Z)
+- Berdasarkan Tahun Terbit
 - Berdasarkan Rating (Tertinggi–Terendah)
 - Kembali ke Menu Utama
 
@@ -61,6 +61,7 @@ Opsi untuk menutup program atau kembali ke menu utama.
 Catatan, Program ini ditujukan untuk pengelolaan koleksi buku pribadi, bukan untuk skala besar. Algoritma dipilih berdasarkan kemudahan implementasi dan efisiensi untuk jumlah data kecil.
 
 JANGAN, memasukan input yang tidak sesuai pada daftar menu, pilihan metode penampilan daftar buku, atau konfirmasi pengeditan dan penghapusan. Melakukan hal tersebut akan membuat program akan menampilkan pesan error.
+
 
 
 
