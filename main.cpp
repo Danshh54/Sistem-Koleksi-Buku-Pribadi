@@ -92,9 +92,28 @@ void tampilBukuTahunRating(int z) {
         cout << "-------------------------------------" << endl;
     }
 }
-
 void cariBuku(const string keyword) {
+    bool ditemukan = false;
 
+    cout << "\nHasil Pencarian: \"" << keyword << "\"\n";
+    cout << "-------------------------------------\n";
+
+    for (int i = 0; i < jmlDataBuku; i++) {
+        if (dataBuku[i][0].find(keyword) != string::npos ||
+            dataBuku[i][1].find(keyword) != string::npos)
+        {
+            ditemukan = true;
+            cout << "Judul : " << dataBuku[i][0] << endl;
+            cout << "Author: " << dataBuku[i][1] << endl;
+            cout << "Tahun : " << dataBuku[i][2] << endl;
+            cout << "Genre : " << dataBuku[i][3] << endl;
+            cout << "Rating: " << dataBuku[i][4] << endl;
+            cout << "-------------------------------------\n";
+        }
+    }
+
+    if (!ditemukan)
+        cout << "Tidak ada buku yang cocok!\n";
 }
 
 int validasiInput(const string pesan) {
@@ -111,6 +130,73 @@ int validasiInput(const string pesan) {
         }
         return nilai;
     }
+}
+
+void editBuku(const string keyword) {
+    int index = -1;
+
+    for (int i = 0; i < jmlDataBuku; i++) {
+        if (dataBuku[i][0] == keyword || dataBuku[i][1] == keyword) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "Buku tidak ditemukan!\n";
+        return;
+    }
+
+    cin.ignore();
+
+    string judul, author, tahun, genre, rating;
+
+    cout << "Masukan Judul baru: ";
+    getline(cin, judul);
+
+    cout << "Masukan Author baru: ";
+    getline(cin, author);
+
+    int t = validasiInput("Masukan Tahun terbit baru: ");
+    cin.ignore();
+
+    cout << "Masukan Genre baru: ";
+    getline(cin, genre);
+
+    int r = validasiInput("Masukan Rating baru (1–10): ");
+
+    dataBuku[index][0] = judul;
+    dataBuku[index][1] = author;
+    dataBuku[index][2] = to_string(t);
+    dataBuku[index][3] = genre;
+    dataBuku[index][4] = to_string(r);
+
+    cout << "Data buku berhasil diperbarui!\n";
+}
+
+void hapusBuku(const string keyword) {
+    int index = -1;
+
+    for (int i = 0; i < jmlDataBuku; i++) {
+        if (dataBuku[i][0] == keyword || dataBuku[i][1] == keyword) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "Buku tidak ditemukan!\n";
+        return;
+    }
+
+    for (int i = index; i < jmlDataBuku - 1; i++) {
+        for (int k = 0; k < jmlKolom; k++) {
+            dataBuku[i][k] = dataBuku[i + 1][k];
+        }
+    }
+
+    jmlDataBuku--;
+    cout << "Buku berhasil dihapus!\n";
 }
 
 int main() {
@@ -214,13 +300,21 @@ int main() {
             }
         }
         if (pilihan == 3) {
-            cout << "Fitur Cari Buku belum tersedia." << endl;
+            cin.ignore();
+            string key;
+            cout << "Masukkan judul/author buku: ";
+            getline(cin, key);
+            cariBuku(key);
         }
         if (pilihan == 4) {
             cout << "Fitur Edit Buku belum tersedia." << endl;
         }
         if (pilihan == 5) {
-            cout << "Fitur Hapus Buku belum tersedia." << endl;
+            cin.ignore();
+            string key;
+            cout << "Masukkan judul/author yang ingin dihapus: ";
+            getline(cin, key);
+            hapusBuku(key);
         }
         if (pilihan == 6) {
             cout << "Program berakhir king." << endl;
