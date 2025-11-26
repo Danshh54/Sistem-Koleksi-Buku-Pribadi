@@ -8,10 +8,21 @@ const int jmlKolom = 5;
 string dataBuku[jmlBaris][jmlKolom] = {
     {"The Hobbit", "J.R.R. Tolkien", "1937", "Fantasy", "9"},
     {"1984", "George Orwell", "1949", "Dystopian", "8"},
-    {"The Lord of the Rings", "J.R.R. Tolkien", "1954", "Fantasy", "10"}
+    {"The Lord of the Rings", "J.R.R. Tolkien", "1954", "Fantasy", "10"},
+    {"Hoblit", "Harper Lee", "1960", "Fiction", "9"},
+    {"The Silent Archive", "Marion Graves", "2018", "Mystery", "8"},
+    {"Echoes of the Fallen", "Ronan Hale", "2021", "Fantasy", "9"},
+    {"Digital Souls", "Ari Nakamura", "2019", "Sci-Fi", "7"},
+    {"Winds of Yesterday", "Clara Montrose", "2015", "Drama", "6"},
+    {"Ironbound Oath", "Gareth Voss", "2022", "Adventure", "9"},
+    {"Painted Horizons", "Lina Marquez", "2020", "Romance", "7"},
+    {"Fragments of Dawn", "Elio Hartmann", "2016", "Philosophy", "8"},
+    {"The Clockmaker’s Paradox", "Sylvia Kerr", "2023", "Sci-Fi", "9"},
+    {"Ashes and Remnants", "Dara Kingsley", "2017", "Post-Apocalyptic", "8"}
 }; //data awal buku
 
-int jmlDataBuku = 3; 
+int jmlDataBuku = 13; 
+int arrID[jmlBaris];
 
 void tambahBuku(const string judul, const string author, const string tahun, const string genre, const string rating) {
     if (jmlDataBuku >= jmlBaris) {
@@ -92,17 +103,34 @@ void tampilBukuTahunRating(int z) {
         cout << "-------------------------------------" << endl;
     }
 }
+
+string keKecil(string text) {
+    for (char &c : text) {
+        c = tolower(c);
+    }
+    return text;
+}
+
 void cariBuku(const string keyword) {
     bool ditemukan = false;
+    int count = 0;
+    string kecil = keKecil(keyword);
+    for (int i = 0; i < jmlBaris; i++) arrID[i] = -1;
 
     cout << "\nHasil Pencarian: \"" << keyword << "\"\n";
     cout << "-------------------------------------\n";
 
     for (int i = 0; i < jmlDataBuku; i++) {
-        if (dataBuku[i][0].find(keyword) != string::npos ||
-            dataBuku[i][1].find(keyword) != string::npos)
+        string judulKecil = keKecil(dataBuku[i][0]);
+        string authorKecil = keKecil(dataBuku[i][1]);
+
+        if (judulKecil.find(kecil) != string::npos ||
+            authorKecil.find(kecil) != string::npos)
         {
             ditemukan = true;
+            arrID[count] = i;
+            count++;
+            cout << "ID    : " << i << endl;
             cout << "Judul : " << dataBuku[i][0] << endl;
             cout << "Author: " << dataBuku[i][1] << endl;
             cout << "Tahun : " << dataBuku[i][2] << endl;
@@ -174,30 +202,36 @@ void editBuku(const string keyword) {
     cout << "Data buku berhasil diperbarui!\n";
 }
 
-void hapusBuku(const string keyword) {
-    int index = -1;
+int hapusBuku(const int id) {
+    bool valid = false;
+    string bukuNama;
+    int pos = -1;
 
-    for (int i = 0; i < jmlDataBuku; i++) {
-        if (dataBuku[i][0] == keyword || dataBuku[i][1] == keyword) {
-            index = i;
+    for (int i = 0; i < jmlBaris; i++) {
+        if (arrID[i] == id) {
+            valid = true;
+            pos = id;
             break;
         }
     }
 
-    if (index == -1) {
-        cout << "Buku tidak ditemukan!\n";
-        return;
+    if (!valid) {
+        return -1;
     }
 
-    for (int i = index; i < jmlDataBuku - 1; i++) {
-        for (int k = 0; k < jmlKolom; k++) {
-            dataBuku[i][k] = dataBuku[i + 1][k];
+    bukuNama = dataBuku[pos][0];
+
+    for (int i = pos; i < jmlDataBuku - 1; i++) {
+        for (int j = 0; j < jmlKolom; j++) {
+            dataBuku[i][j] = dataBuku[i + 1][j];
         }
     }
 
     jmlDataBuku--;
-    cout << "Buku berhasil dihapus!\n";
+    cout << "Buku " << bukuNama << " berhasil dihapus!\n";
+    return 0;
 }
+
 
 int main() {
     string judul, author, tahun, genre, rating;
@@ -245,8 +279,8 @@ int main() {
             while (true) {
                 a = validasiInput("Masukan tahun terbit buku: ");
                 cin.ignore();
-                if (a < 1000 || a > 2024) {
-                    cout << "Tahun terbit tidak valid! Masukkan antara 1000 sampai 2024." << endl;
+                if (a > 2024) {
+                    cout << "Tahun terbit harus maksimal 2024!" << endl;
                     continue;
                 }
                 break;
@@ -276,7 +310,7 @@ int main() {
             tambahBuku(judul, author, tahun, genre, rating);
             cout << "Buku berhasil ditambahkan!" << endl;
         }
-         
+        
         if (pilihan == 2) {
             int pilihanTampil;
             cout << "\nPilihan Tampilkan Buku:" << endl;
@@ -312,9 +346,22 @@ int main() {
         if (pilihan == 5) {
             cin.ignore();
             string key;
-            cout << "Masukkan judul/author yang ingin dihapus: ";
+            cout << "Cari judul yang ingin dihapus: ";
             getline(cin, key);
-            hapusBuku(key);
+            int a;
+            cariBuku(key);
+            while (true) {
+                int id;
+                id = validasiInput("Masukan ID buku yang ingin dihapus: ");
+                a = hapusBuku(id);
+                if (a == -1) {
+                    cout << "ID tidak sesuai dengan hasil pencarian!\n";
+                    continue;
+                }
+                else {
+                    break;
+                }
+            }
         }
         if (pilihan == 6) {
             cout << "Program berakhir king." << endl;
