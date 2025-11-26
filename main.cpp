@@ -9,19 +9,9 @@ string dataBuku[jmlBaris][jmlKolom] = {
     {"The Hobbit", "J.R.R. Tolkien", "1937", "Fantasy", "9"},
     {"1984", "George Orwell", "1949", "Dystopian", "8"},
     {"The Lord of the Rings", "J.R.R. Tolkien", "1954", "Fantasy", "10"},
-    {"Hoblit", "Harper Lee", "1960", "Fiction", "9"},
-    {"The Silent Archive", "Marion Graves", "2018", "Mystery", "8"},
-    {"Echoes of the Fallen", "Ronan Hale", "2021", "Fantasy", "9"},
-    {"Digital Souls", "Ari Nakamura", "2019", "Sci-Fi", "7"},
-    {"Winds of Yesterday", "Clara Montrose", "2015", "Drama", "6"},
-    {"Ironbound Oath", "Gareth Voss", "2022", "Adventure", "9"},
-    {"Painted Horizons", "Lina Marquez", "2020", "Romance", "7"},
-    {"Fragments of Dawn", "Elio Hartmann", "2016", "Philosophy", "8"},
-    {"The Clockmaker’s Paradox", "Sylvia Kerr", "2023", "Sci-Fi", "9"},
-    {"Ashes and Remnants", "Dara Kingsley", "2017", "Post-Apocalyptic", "8"}
 }; //data awal buku
 
-int jmlDataBuku = 13; 
+int jmlDataBuku = 3; 
 int arrID[jmlBaris];
 
 void tambahBuku(const string judul, const string author, const string tahun, const string genre, const string rating) {
@@ -111,10 +101,12 @@ string keKecil(string text) {
     return text;
 }
 
-void cariBuku(const string keyword) {
+bool cariBuku(const string keyword) {
     bool ditemukan = false;
     int count = 0;
     string kecil = keKecil(keyword);
+
+
     for (int i = 0; i < jmlBaris; i++) arrID[i] = -1;
 
     cout << "\nHasil Pencarian: \"" << keyword << "\"\n";
@@ -140,8 +132,10 @@ void cariBuku(const string keyword) {
         }
     }
 
-    if (!ditemukan)
-        cout << "Tidak ada buku yang cocok!\n";
+    if (!ditemukan) {
+        cout << "Tidak ada buku yang cocok!\n";  
+    }
+    return ditemukan; 
 }
 
 int validasiInput(const string pesan) {
@@ -160,8 +154,7 @@ int validasiInput(const string pesan) {
     }
 }
 
-int editBuku(int id, const string judul, const string author,
-             const string tahun, const string genre, const string rating) 
+int editBuku(int id, const string judul, const string author, const string tahun, const string genre, const string rating) 
 {
     bool valid = false;
     int pos = -1;
@@ -187,7 +180,6 @@ int editBuku(int id, const string judul, const string author,
     cout << "Data buku berhasil diperbarui!\n";
     return 0;
 }
-
 
 int hapusBuku(const int id) {
     bool valid = false;
@@ -218,7 +210,6 @@ int hapusBuku(const int id) {
     cout << "Buku " << bukuNama << " berhasil dihapus!\n";
     return 0;
 }
-
 
 int main() {
     string judul, author, tahun, genre, rating;
@@ -320,87 +311,126 @@ int main() {
                 }
             }
         }
+
         if (pilihan == 3) {
             cin.ignore();
             string key;
-            cout << "Masukkan judul/author buku: ";
-            getline(cin, key);
+            while (true) {
+                cout << "Masukkan judul/author buku: ";
+                getline(cin, key);
+                if (key == "") {
+                    cout << "Pencarian tidak boleh kosong!" << endl;
+                    continue;
+                }
+                    break;
+            }
             cariBuku(key);
         }
+
         if (pilihan == 4) {
             cin.ignore();
             string key;
-
-            cout << "Masukkan judul/author buku yang ingin diedit: ";
-            getline(cin, key);
-
-            cariBuku(key); 
-
-            int id;
             while (true) {
-                id = validasiInput("Masukkan ID buku yang ingin diedit: ");
+                cout << "Masukkan judul buku yang ingin diedit: ";
+                getline(cin, key);
+                if (key == "") {
+                    cout << "Pencarian tidak boleh kosong!" << endl;
+                    continue;
+                }
+                    break;
+            }
+            int a;
+            if (!cariBuku(key)) {
+                continue; 
+            }
 
+            while (true) {
+                int id;
                 bool valid = false;
-                for (int i = 0; i < jmlBaris; i++) {
-                    if (arrID[i] == id) {
-                        valid = true;
-                        break;
+                int pos = -1;
+                id = validasiInput("Masukkan ID buku yang ingin diedit: ");
+                    for (int i = 0; i < jmlBaris; i++) {
+                        if (arrID[i] == id) {
+                            valid = true;
+                            pos = id;
+                            break;
+                        }
                     }
-                }
 
-                if (!valid) {
-                    cout << "ID tidak sesuai dengan hasil pencarian!\n";
-                    continue;
-                }
-                break;
-            }
-
-            cin.ignore();
-
-            string judul, author, genre;
-            int tahunBaru, ratingBaru;
-
-            cout << "Masukkan judul baru: ";
-            getline(cin, judul);
-
-            cout << "Masukkan author baru: ";
-            getline(cin, author);
-
-            while (true) {
-                tahunBaru = validasiInput("Masukkan tahun terbit baru: ");
+                    if (!valid) {
+                        cout << "ID tidak sesuai dengan hasil pencarian!\n";
+                        continue;
+                    }
                 cin.ignore();
-                if (tahunBaru < 2000 || tahunBaru > 2024) {
-                    cout << "Tahun harus 2000 - 2024!\n";
-                    continue;
+                while (true) {
+                    cout << "Masukan judul buku: ";
+                    getline(cin, judul);
+                    if (judul == "") {
+                        cout << "Judul buku tidak boleh kosong!" << endl;
+                        continue;
+                    }
+                    break;
                 }
+                while (true) {
+                    cout << "Masukan author buku: ";
+                    getline(cin, author);
+                    if (author == "") {
+                        cout << "Author buku tidak boleh kosong!" << endl;
+                        continue;
+                    }
+                    break;
+                }
+                while (true) {
+                    a = validasiInput("Masukan tahun terbit buku: ");
+                    cin.ignore();
+                    if (a > 2024) {
+                        cout << "Tahun terbit harus maksimal 2024!" << endl;
+                        continue;
+                    }
+                    break;
+                }
+                
+                while (true) {
+                    cout << "Masukan genre buku: ";
+                    getline(cin, genre);
+                    if (genre == "") {
+                        cout << "Genre buku tidak boleh kosong!" << endl;
+                        continue;
+                    }
+                    break;
+                }
+
+                while (true) {
+                    b = validasiInput("Masukan rating buku: ");
+                    if (b < 1 || b > 10) {
+                    cout << "Rating harus antara 1 sampai 10!" << endl;
+                    continue;
+                    }
+                    break;
+                }
+
+                tahun = to_string(a);
+                rating = to_string(b);
+                a = editBuku(id, judul, author, tahun, genre, rating);
                 break;
             }
-
-            cout << "Masukkan genre baru: ";
-            getline(cin, genre);
-
-            while (true) {
-                ratingBaru = validasiInput("Masukkan rating baru (1–10): ");
-                if (ratingBaru < 1 || ratingBaru > 10) {
-                    cout << "Rating harus 1–10!\n";
-                    continue;
-                }
-                break;
-            }
-
-            editBuku(id, judul, author, to_string(tahunBaru), genre, to_string(ratingBaru));
         }
-
-
-
 
         if (pilihan == 5) {
             cin.ignore();
             string key;
-            cout << "Cari judul yang ingin dihapus: ";
-            getline(cin, key);
-            int a;
-            cariBuku(key);
+            while (true) {
+                cout << "Masukkan judul buku yang ingin dihapus: ";
+                getline(cin, key);
+                if (key == "") {
+                    cout << "Pencarian tidak boleh kosong!" << endl;
+                    continue;
+                }
+                    break;
+            }
+            if (!cariBuku(key)) {
+                continue;
+            }
             while (true) {
                 int id;
                 id = validasiInput("Masukan ID buku yang ingin dihapus: ");
@@ -414,6 +444,7 @@ int main() {
                 }
             }
         }
+
         if (pilihan == 6) {
             cout << "Program berakhir king." << endl;
             break;
